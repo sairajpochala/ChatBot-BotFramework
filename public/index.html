@@ -1,0 +1,69 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" href="css/index.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="./css/bootstrap-combined.min.css">
+         <meta charset="UTF-8" />
+    <title>Emma</title>
+
+    <link href="https://unpkg.com/botframework-webchat/botchat.css" rel="stylesheet" />
+    </head>
+    <body>
+    <div id="BotChatGoesHere"></div>
+    <!--<form id="logon-form">
+        <label for="user-id">Enter login ID here</label>
+        <input id="user-id" type="text">
+        <button id="submit-btn" type="submit">Log In</button>
+        <!--<div class="login">
+            <h1>Login</h1>
+            <form method="post" action='sharepoint.html?s=6DBMGYsiLdw.cwA.Mog.8ACG8ZIn-z54NvJ5HylbG8Lc71NX1rCy9AHcOUT0Iq0&webSocket=false'>
+                <input id='username' type="text" name="u" placeholder="Username" required="required" />
+                <input id='password' type="password" name="p" placeholder="Password" required="required" />
+                <button type="submit" class="btn btn-primary btn-block btn-large">Let me in</button>
+            </form>
+        </div>-->
+         <!--<div class="login" style="margin-left: 12%; height: 48%; background: white; padding: 2%;  width: 30%;">-->
+         <div class="login" style="margin-left: 12%; height: 33%; background: white; padding: 2%; float: right; margin-right: 10%;  margin-top: 17%;  width: 30%; border-radius: 4%;">
+             <form method="post" action='bot.html' style="margin-top: 10px;">
+            <!--<form method="post" action='sharepoint.html?s=lATjxsl_bhI.cwA.zuY.0NxIwbTRlJW1Vyi2pjSX7E42xQ_OvMpRymiAWMdbHCw&webSocket=false' style="margin-top: 10px;">-->
+   
+                     <div style="border-bottom: 1px solid grey;"> <i class="fa fa-user" style="font-size:2em;color:#124191;"></i>
+                      <input id='username' type="text" name="u" placeholder="Username" required="required" style="font-size: 22px;border: none;width: 90%; height: 15%;"/></div>
+                     <div style="border-bottom: 1px solid grey;margin-top:10%"><i class="fa fa-lock" style="font-size:2em; color:#124191;"></i>
+                     <input id='password' type="password" name="p" placeholder="Password" required="required"style="font-size: 22px; border: none;width: 90%; height: 15%;" /></div> 
+                <button type="submit" class="btn btn-primary btn-block btn-large" style="font-size: 22px; width: 97%; margin-left: 2%;margin-top: 11%; background:#124191; color: white; border-radius: 4%;">Login</button>
+                
+                <div style="margin-top:7%;      font-size: 18px;"><b>Forgot Password?</b><span class="pull-right" style="margin-right: 5%;    font-size: 18px;"><b>Register?</b></span></div>  
+            </form>
+        </div>
+        <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+        <script>
+            $('form').submit(function(e){
+                e.preventDefault();
+                var username = $('#username').val();
+                var password = $('#password').val();
+                var credentials = {"srichakradhar": "srichakradhar", "pradeep": "pradeep", "pruthvi": "pruthvi", "vamsipriya": "vamsipriya", "jyothi": "jyothi", "sathya": "sathya", "nxpuser": "nxpuser", "alex": "pamatat"}
+                // add a method for $.get('url with params') on node server for authorization
+                localStorage['username'] = $('#username').val();
+                localStorage['password'] = $('#password').val();
+                if(credentials.hasOwnProperty(username)){
+                    window.location = "bot.html";
+                }else{
+                    $('#username').val('')
+                    $('#password').val('')
+                    return false;
+                }
+            });
+            
+            $(document).ready(function() {
+                if(localStorage['username']) window.location = "bot.html";
+            });
+        </script>
+        <script src="https://unpkg.com/botframework-webchat/botchat.js"></script>
+    <script src="connectToBot.js"></script>
+    </body>
+</html>

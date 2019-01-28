@@ -1,0 +1,198 @@
+
+<!--<iframe src='https://webchat.botframework.com/embed/order-helper?s=_yiNktNGr9U.cwA.4GA.0Li-L1V1XogFgWXN2YeyJ0_HTvBM4JB_n5ZPVXDEIwk'></iframe> -->
+<!DOCTYPE html>
+<!-- 
+NOTE: This sample requires a bot which can send and receive specific event messages. Follow the instructions on 
+https://github.com/ryanvolum/backChannelBot to deploy such a bot. 
+
+This is a sample HTML file which shows how to embed an instance of WebChat which listens for event activities. For the sake
+of demonstration it specifically listens for events of name "changeBackground". Using the backChannelBot sample 
+our page can listen for events of name "changeBackground" and send events of name "buttonClicked". This 
+highlights the ability for a bot to communicate with a page that embeds the bot through WebChat. 
+ 
+1. Build the project: "npm run build"
+2. Start a web server: "npm run start"
+3. Aim your browser at "http://localhost:8000/samples/backchannel?[parameters as listed below]"
+
+For ease of testing, several parameters can be set in the query string:
+    * s = Direct Line secret, or
+    * t = Direct Line token (obtained by calling Direct Line's Generate Token)
+    * domain = optionally, the URL of an alternate Direct Line endpoint
+    * webSocket = set to 'true' to use WebSocket to receive messages (currently defaults to false)
+    * userid, username = id (and optionally name) of bot user
+    * botid, botname = id (and optionally name) of bot
+-->
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Emma</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+	<link href="https://unpkg.com/botframework-webchat/botchat.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/order.css">
+    <link rel="stylesheet" href="./css/index_another.css">
+    <link rel="stylesheet" href="./css/index_working.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/app_another.css">
+    <link rel="stylesheet" href="./css/chatUI.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+	<nav class="navbar nokiamain1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">  <img src="../tcs_chatbot/tcs.png" alt="nokia" style="height:5em; margin-left:3%;margin-top:1%;"/></a>
+            </div>
+             <!--<ul class="nav">
+               <li style="display:inline:width:20%;margin-top:0%"><button class="btn btn-success btn-sm lgoutimg " onclick="signOut()"><img src ="../tcs_chatbot/logout_42x42.png"</button></li>
+             </ul>-->
+        </div>
+      </nav>
+  <!--
+  Inspired by https://dribbble.com/supahfunk
+  -->
+     <!--<div class="btn btn-raised" id="buttonClick">
+        <div id="chat-overlay"></div>-->
+        <!--<img src="./img/chatbot_108x108.png" style="
+        position: absolute;
+        top: -17%;
+        left: -15%;
+        ">  -->
+        <!--<img src="./img/ChatButton.png" style="
+          position: absolute;
+          top: 20%;
+          left: 17%;
+          width: 65%;
+        ">
+      </div> -->
+  
+  <iframe src='https://webchat.botframework.com/embed/Alen?s=aPuni9MYSXI.cwA.NqA.k3c89fYI9bYnow5ByF20hLXy_hMKzsgk6rKqTtDU4qo'></iframe>
+  
+
+    <style>
+        iframe {
+            width: 450px;
+            height: 75%;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background: #efefef;
+        }
+    </style>
+     <!--<div class="myChatBox " id="BotChatGoesHere"></div>-->
+
+ 
+   	<!--<button onclick="postButtonMessage()" style="width:120px;height:60px;padding:20px;margin-left:80px;margin-top:20px;">Click Me!</button>-->
+
+    <!--<button onclick="signOut()">Sign Out</button>-->
+    <!--<div class="wrapper" onclick="signOut()">
+      <div class="inner">
+        <span></span>
+      </div>
+    </div>
+    
+    <div class="cssload-loader"></div>-->
+    
+    <!-- <script src="../../botchat.js"></script> -->
+    <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+      <script src="./js/index.js"></script>
+    <script src="https://unpkg.com/botframework-webchat/botchat.js"></script>
+	<script>
+      setTimeout(function(){
+          $("#BotChatGoesHere").addClass('showDiv'); 
+          },200);
+          
+        var params = BotChat.queryParams(location.search);
+
+        var user = {
+            id: params['userid'] || 'userid',
+            name: params["username"] || 'username'
+            };
+        
+        var bot = {
+            id: params['botid'] || 'botid',
+            name: params["botname"] || 'botname'
+        };
+
+        window['botchatDebug'] = params['debug'] && params['debug'] === "true";
+
+        var botConnection = new BotChat.DirectLine({            
+            secret: 'NRmnsmwEKfs.cwA.yrU.4AdcTDTmH_qk0T-0SD6i_TLFBbUW3IE35R9o5_2g1PQ',
+            token: params['t'],
+            domain: params['domain'],
+            webSocket: false // defaults to true
+        });
+
+        BotChat.App({
+            botConnection: botConnection,
+            user: user,
+            bot: bot
+        }, document.getElementById("BotChatGoesHere"));
+        
+        var helloCount = 0;
+
+        botConnection.activity$
+            .filter(activity => activity.type === "event" && activity.name === "botStarted")
+            .subscribe(activity => sendHello(activity.value))
+
+        const sendHello = (botEvent) => {
+            if(botEvent.botInitiated && botEvent.helloCount == 0){
+                botConnection
+                    .postActivity({type: "event", value: {username: localStorage['username'], 'helloCount': helloCount}, from: {id: "me" }, name: "userLogin"})
+                    .subscribe(id => console.log("success"));
+                console.log("userLogin event send to the bot on receiving botStarted");
+                console.log("helloCount in bot:", botEvent.helloCount);
+                helloCount++;
+            }
+            $('.cssload-loader').remove();
+            // $('#buttonClick').show();
+            console.log("helloCount:", helloCount);
+        }
+
+        const postButtonMessage = () => {
+            botConnection
+                .postActivity({type: "event", value: localStorage['username'], from: {id: "me" }, name: "buttonClicked"})
+                .subscribe(id => console.log("success"));
+        }
+
+        $(document).ready(function() {
+          // $( ".messages" ).after( "<div id="BotChatGoesHere"></div>" );
+            helloCount = 0;
+             // $('#buttonClick').hide();
+            if(!localStorage.hasOwnProperty('username')){
+                localStorage['username'] = "srichakradhar";
+            }
+            botConnection
+                .postActivity({type: "event", value: {username: localStorage['username'], 'helloCount': helloCount}, from: {id: "me" }, name: "userLogin"})
+                .subscribe(id => console.log("success"));
+            console.log("userLogin event sent to the bot on document ready");
+            helloCount++;
+            
+        });
+        
+        const signOut = () => {
+            delete localStorage['username'];
+            delete localStorage['password'];
+            window.location = '/index.html';
+        }
+
+    </script>
+    <!--<div style="color:white;margin-left: 110px;margin-top: 126px;width: 481px;border: 4px solid grey;
+                 padding: 15px;height: 200px;border-radius: 38px;background-color: #06021e;padding-left:40px;">
+                 <p><u><h3 style="margin-bottom: 6px">Use Case Description:</h3></u></p>
+                 <li style="margin-left:10px">Alen</li>
+                 <p  style="margin-left:10px;margin-top:10px;">User is not able to login beacause he does not have the credentials. The bot creates a ticket on behalf of the user to have the login id created. </p>
+                
+                
+                 </div>-->
+                 
+              
+</body>
+
+</html>

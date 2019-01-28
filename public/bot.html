@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- 
+NOTE: This sample requires a bot which can send and receive specific event messages. Follow the instructions on 
+https://github.com/ryanvolum/backChannelBot to deploy such a bot. 
+
+This is a sample HTML file which shows how to embed an instance of WebChat which listens for event activities. For the sake
+of demonstration it specifically listens for events of name "changeBackground". Using the backChannelBot sample 
+our page can listen for events of name "changeBackground" and send events of name "buttonClicked". This 
+highlights the ability for a bot to communicate with a page that embeds the bot through WebChat. 
+ 
+1. Build the project: "npm run build"
+2. Start a web server: "npm run start"
+3. Aim your browser at "http://localhost:8000/samples/backchannel?[parameters as listed below]"
+
+For ease of testing, several parameters can be set in the query string:
+    * s = Direct Line secret, or
+    * t = Direct Line token (obtained by calling Direct Line's Generate Token)
+    * domain = optionally, the URL of an alternate Direct Line endpoint
+    * webSocket = set to 'true' to use WebSocket to receive messages (currently defaults to false)
+    * userid, username = id (and optionally name) of bot user
+    * botid, botname = id (and optionally name) of bot
+-->
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Emma</title>
+    <link rel="stylesheet" href="./css/app.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+	<!--<link href="https://unpkg.com/botframework-webchat/botchat.css" rel="stylesheet" />-->
+        <link rel="stylesheet" href="./css/botchat.css">
+    <link rel="stylesheet" href="./css/sharepoint.css">
+    <link rel="stylesheet" href="./css/index_another.css">
+    <link rel="stylesheet" href="./css/index_working.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/app_another.css">
+    <link rel="stylesheet" href="./css/chatUI.css">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+      <nav class="navbar nokiamain1">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <!--<a class="navbar-brand" href="#">  <img src="../Nokia_chatbot/nokio_logo_160x53.png" alt="nokia" style="height:5em; margin-left:3%"/></a>	-->
+                <a class="navbar-brand" href="#">  <img src="../tcs_chatbot/white_logo_2.svg" alt="nokia" style="width:25%;float:left;margin-top: 392px;margin-left:25px"/></a>
+            </div>
+             <ul class="nav ">
+               <!--<li style="display:inline:width:20%;margin-top:0%"><button class="btn btn-success btn-sm lgoutimg " ng-click="logOut()"><img src ="../CLIENT/logout_42x42.png"</button></li>-->
+               <!--<li style="display:inline:width:20%;margin-top:0%"><button class="btn btn-success btn-sm lgoutimg " onclick="signOut()"><img src ="../Nokia_chatbot/logout_42x42.png"</button></li>-->
+               <li style="display:inline:width:20%;margin-top:0%;list-style-type: none;"><button class="btn btn-success btn-sm lgoutimg " onclick="signOut()"><img src ="../tcs_chatbot/logout_42x42.png"<button style = "margin-top : 68px;cursor:pointer"></button></li>
+             </ul>
+        </div>
+      </nav>
+	<!-- <h2 style="font-family:Segoe UI;">Type a color into the WebChat!</h2> -->
+	<div id="BotChatGoesHere" class="wc-narrow"></div>
+    <!--<input type="button" value="Logout" class="logout" onclick="signOut()"/>-->
+    <!--<h1 class='center-text' id="letterpress">Applied Materials</h1>-->
+    
+    <!--<div class="chat-launcher hide"></div>
+    <div class="chat-wrapper" data-headline="PIRO - Bot for Ariba upgrade issues ">
+        <div id="chatbot-column-holder" class="responsive-column content-column">
+          <div class="chat-column">
+            <!--<iframe src='https://webchat.botframework.com/embed/NXPSNOWBOT?s=Y-MHHyHF3IA.cwA.xkA.RokjWNrqCZQqmToWmm_W__WR0m0of4X8h_kv257gXqU'></iframe>
+            <div id="BotChatGoesHere">
+          </div>
+        </div>
+      </div>
+    </div>-->
+    
+    <!--
+        <div id="chat-circle" class="btn btn-raised" >
+          <div id="chat-overlay"></div>
+            <img src="../img/chatbot_108x108.png" style="
+            position: absolute;
+            top: -17%;
+            left: -15%;
+            ">  
+            <img src="../img/ChatButton.png" style="
+              position: absolute;
+              top: 20%;
+              left: 17%;
+              width: 65%;
+            ">
+        </div>
+    -->
+      <!--
+      Inspired by https://dribbble.com/supahfunk
+      -->
+ 
+         <!--div style="color:white;margin-left: 110px;margin-top: 126px;width: 481px;border: 4px solid grey;
+                 padding: 15px;height: 200px;border-radius: 38px;background-color: #06021e;padding-left:40px;">
+                 <p><u><h3 style="margin-bottom: 6px">Use Case Description:</h3></u></p>
+                 <li style="margin-left:10px">Piro</li>
+                 <p  style="margin-left:10px;margin-top:10px;">User is not able to login beacause he does not have the credentials. The bot creates a ticket on behalf of the user to have the login id created. </p>
+                
+                
+         </div>-->
+         
+         <!--<div style="color:white;margin-left: 110px;margin-top: 126px;width: 481px;border: 4px solid grey;
+                 padding: 15px;height: 225px;border-radius: 38px;background-color: #06021e;padding-left:40px;">
+                 <p><u><h3 style="margin-bottom: 6px">Use Case Description:</h3></u></p>
+                 <li style="margin-left:10px">Vendor Information lookup:</li>
+                 <p  style="margin-left:10px;margin-top:10px;">The Bot guides the user on how to search for vendor information.</p>
+                 <li style="margin-left:10px">Add a new Vendor:</li>
+                 <p  style="margin-left:10px;margin-top:10px;">The Bot connects to a live agent when the user is not able to add a vendor according to bot's instructions.</p>
+                
+                
+         </div>
+         -->
+         
+         
+         <!--Order-helper Video -->
+         <!--<p><u><h3>Order Resubmission:</h3></u></p>
+             <p style="margin-left:11px;margin-top:10px;"><li>Order gets stuck, when the product is non-orderable.</br></br></li> <li>Workflow initiation to the Product Owner to make it Orderable. </br></br></li><li>On approval, resubmit the order.</li></p>
+         </div>-->
+         
+         <!--Vendor-Data pull Video -->
+         <!--<p><u><h3>Use Case Description:</h3></u></p>
+             <li style="margin-left:10px"><b>Vendor data pull:</b></li>
+             <p style="margin-left:11px;margin-top:10px;">User wants data related to a vendor. The Bot provides the vendor data  by pulling it from Ariba.</p>
+         </div>-->
+         
+         <div class="btn btn-raised hide" id="buttonClick">
+            <div id="chat-overlay"></div>-->
+            <img src="./img/ChatButton_cdk.png" style="
+            position: absolute;
+            top: -4%;
+            left: -6%;
+            ">  
+            <img src="./img/ChatButton.png" style="
+              position: absolute;
+              top: 15%;
+              left: 12%;
+              width: 73px;
+            ">
+        </div>
+    </div>
+   
+   	<!--<button onclick="postButtonMessage()" style="width:120px;height:60px;padding:20px;margin-left:80px;margin-top:20px;">Click Me!</button>-->
+
+    <!--<button onclick="signOut()">Sign Out</button>-->
+    <!--<div class="wrapper" onclick="signOut()">
+      <div class="inner">
+        <span></span>
+      </div>
+    </div>
+    
+    <div class="cssload-loader"></div>-->
+    
+    <!-- <script src="../../botchat.js"></script> -->
+    <div class="cssload-loader"></div>
+    <script
+          src="https://code.jquery.com/jquery-3.3.1.min.js"
+          integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+          crossorigin="anonymous"></script>
+      <script src="./js/index.js"></script>
+       <script src="./js/botchat.js"></script>
+    <!--<script src="https://unpkg.com/botframework-webchat/botchat.js"></script>-->
+	<script>
+      setTimeout(function(){
+          $("#BotChatGoesHere").addClass('showDiv'); 
+          },200);
+          
+        var params = BotChat.queryParams(location.search);
+
+        var user = {
+            id: localStorage['username'] || 'userid',
+            name: localStorage["username"] || 'username'
+            };
+        
+        var bot = {
+            id: params['botid'] || 'botid',
+            name: params["botname"] || 'botname'
+        };
+
+        window['botchatDebug'] = params['debug'] && params['debug'] === "true";
+
+        var botConnection = new BotChat.DirectLine({
+            secret: 'NRmnsmwEKfs.cwA.yrU.4AdcTDTmH_qk0T-0SD6i_TLFBbUW3IE35R9o5_2g1PQ',
+            //Below secret key 3DmQKQLk3Nw is for ProcReqBot
+            // secret: '3DmQKQLk3Nw.cwA.BiY.rIdYQ96faSjAr2Zcw7KRyVXIeWytk9pDMhUKtekIhUc',
+            //Below secret key lATjxsl_bhI is for Order-helper PLM 
+            // secret: 'EZNqDc6cP9E.cwA.NZg.AtW9KSaYrDtL7g0Yjo70X8tEdG27YsxRTiV_FMrz9Ns',
+            token: params['t'],
+            domain: params['domain'],
+            webSocket: false // defaults to true
+        });
+const speechOptions = {
+    speechRecognizer: new YourOwnSpeechRecognizer(),
+    speechSynthesizer: new YourOwnSpeechSynthesizer()
+  }
+
+        BotChat.App({
+            botConnection: botConnection,
+            user: user,
+            speechOptions: speechOptions,
+            bot: bot
+        }, document.getElementById("BotChatGoesHere"));
+        
+        var helloCount = 0;
+
+        botConnection.activity$
+            .filter(activity => activity.type === "event" && activity.name === "botStarted")
+            .subscribe(activity => sendHello(activity.value));
+
+        const sendHello = (botEvent) => {
+            if(botEvent.botInitiated && botEvent.helloCount == 0){
+                botConnection
+                    .postActivity({type: "event", value: {username: localStorage['username'], 'helloCount': helloCount}, from: {id: localStorage['username'], name: localStorage['username'] }, name: "userLogin"})
+                    .subscribe(id => console.log("success"));
+                console.log("userLogin event send to the bot on receiving botStarted");
+                console.log("helloCount in bot:", botEvent.helloCount);
+                helloCount++;
+           }
+            $('.cssload-loader').remove();
+            $('#buttonClick').show();
+            console.log("helloCount:", helloCount, 'helloCount from bot event ', botEvent.helloCount);
+        }
+  
+        const postButtonMessage = () => {
+            botConnection
+                .postActivity({type: "event", value: localStorage['username'], from: {id: "me" }, name: "buttonClicked"})
+                .subscribe(id => console.log("success"));
+        }
+
+        $(document).ready(function() {
+          // $( ".messages" ).after( "<div id="BotChatGoesHere"></div>" );
+            helloCount = 0;
+             $('#buttonClick').hide();
+            if(!localStorage.hasOwnProperty('username')){
+                window.location = '/index.html';
+            }
+            botConnection
+                .postActivity({type: "event", value: {username: localStorage['username'], 'helloCount': helloCount}, from: {id: localStorage['username'], name: localStorage['username'] }, name: "userLogin"})
+                .subscribe(id => console.log("success"));
+            console.log("userLogin event sent to the bot on document ready");
+            helloCount++;
+            
+        });
+
+        
+        const signOut = () => {
+            delete localStorage['username'];
+            delete localStorage['password'];
+            window.location = '/index.html';
+        };
+
+    </script>
+</body>
+
+</html>
+
